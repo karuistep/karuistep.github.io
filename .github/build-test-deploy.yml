@@ -1,0 +1,33 @@
+# 워크플로우의 이름
+name: Build, Test, and Deploy
+
+# 워크플로우가 어떤 이벤트에 반응하는지 설정('main'브랜치에 푸쉬될 때 실행)
+on:
+  push:
+    branches:
+      - main
+
+# 각 작업(Job) 정의
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    # 작업의 각 단계(Step) 정의
+    steps:
+      # GitHub 리포지토리 체크아웃
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      # Node.js 설정
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "14"
+
+      # 의존성 설치
+      - name: Install Dependencies
+        run: npm install
+
+      # 빌드 실행
+      - name: Build
+        run: npm run build
